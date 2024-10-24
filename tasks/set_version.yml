@@ -1,0 +1,11 @@
+- name: (PREPARE) Determine latest version release
+  block:
+    - name: "Get latest restic release metadata"
+      ansible.builtin.uri:
+        url: https://api.github.com/repos/restic/restic/releases/latest
+        return_content: true
+      register: restic_remote_metadata
+
+    - name: (PREPARE) Set fact for latest restic release
+      ansible.builtin.set_fact:
+        restic_version: "{{ restic_remote_metadata.json.tag_name[1:] }}"

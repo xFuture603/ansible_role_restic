@@ -6,6 +6,10 @@
   ansible.builtin.include_tasks: 'versioncheck.yml'
   when: submodules_versioncheck | bool
 
+- name: Gather versioning information
+  ansible.builtin.include_tasks: 'set_version.yml'
+  when: restic_version == 'latest'
+
 - name: Make sure restic is available
   ansible.builtin.include_tasks: 'preparation.yml'
 
